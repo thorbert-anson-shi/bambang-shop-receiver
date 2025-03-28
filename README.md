@@ -74,16 +74,16 @@ You can install Postman via this website: https://www.postman.com/downloads/
   - [✅] Commit: `Implement list_all_as_string function in Notification repository.`
   - [✅] Write answers of your learning module's "Reflection Subscriber-1" questions in this README.
 - **STAGE 3: Implement services and controllers**
-  - [ ] Commit: `Create Notification service struct skeleton.`
-  - [ ] Commit: `Implement subscribe function in Notification service.`
-  - [ ] Commit: `Implement subscribe function in Notification controller.`
-  - [ ] Commit: `Implement unsubscribe function in Notification service.`
-  - [ ] Commit: `Implement unsubscribe function in Notification controller.`
-  - [ ] Commit: `Implement receive_notification function in Notification service.`
-  - [ ] Commit: `Implement receive function in Notification controller.`
-  - [ ] Commit: `Implement list_messages function in Notification service.`
-  - [ ] Commit: `Implement list function in Notification controller.`
-  - [ ] Write answers of your learning module's "Reflection Subscriber-2" questions in this README.
+  - [✅] Commit: `Create Notification service struct skeleton.`
+  - [✅] Commit: `Implement subscribe function in Notification service.`
+  - [✅] Commit: `Implement subscribe function in Notification controller.`
+  - [✅] Commit: `Implement unsubscribe function in Notification service.`
+  - [✅] Commit: `Implement unsubscribe function in Notification controller.`
+  - [✅] Commit: `Implement receive_notification function in Notification service.`
+  - [✅] Commit: `Implement receive function in Notification controller.`
+  - [✅] Commit: `Implement list_messages function in Notification service.`
+  - [✅] Commit: `Implement list function in Notification controller.`
+  - [✅] Write answers of your learning module's "Reflection Subscriber-2" questions in this README.
 
 ## Your Reflections
 
@@ -98,3 +98,13 @@ This is the place for you to write reflections:
 2. Rust is stricter when it comes to mutating state during runtime. It requires explicit synchronization tools such as the aforementioned `Mutex<>` and `RwLock<>` to be used in order to ensure proper state synchronization during runtime. If a static variable could simply be changed using a static function, this would allow for the existence of race conditions and synchronization issues, which Rust prevents from compile time.
 
 #### Reflection Subscriber-2
+
+1. While trying to understand where the requests to the `/receive` endpoint are coming from, I did check the contents of `lib.rs` to check if they are defined within it. After further examination, it seems to have been defined earlier in the service. However, now I know that `lib.rs` is used to define the app configuration, such as which ports it's running on, and also to declare shared convenience types and methods such as `Result<T>` and `compose_error_response()`.
+
+   Other than `lib.rs`, the only "other" file is `main.rs`, which is as expected, where the program is first run, and top level server configurations are loaded.
+
+2. The Observer pattern here allows publishers to publish to one uniform interface (the `Subscriber` struct from `bambangshop/src/model/subscriber.rs`). As long as the subscribers make subscription requests following the predefined interface, by providing a URL and name in this case, the subscriber can listen to the publisher quite seamlessly.
+
+   This particular Observer doesn't seem to be optimized for having multiple instances of the main app running. However, if the application were to rely on a singular database, which in and of itself could be sharded further, then horizontal scaling on the main app would be of no issue. As long as they are relying on the same database, then having multiple instances of the main app running would be of no issue.
+
+3. Due to a lack of time, I have not yet added my own tests. I feel like the tests provided in the Postman collection seems to be enough to test the happy paths of the API. In the future, perhaps adding more tests and documentation to the Postman collection could be useful. I believe I could use the Postman documentation tools to communicate between colleagues on the particular structure and required parameters of an API endpoint.
