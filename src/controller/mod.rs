@@ -9,7 +9,8 @@ pub fn route_stage() -> AdHoc {
             routes![
                 notification::subscribe,
                 notification::unsubscribe,
-                notification::receive
+                notification::receive,
+                notification::list
             ],
         )
     });
